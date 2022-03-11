@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1 class="m-2"><strong>EDIT</strong></h1>
+<hr>
+<form action="{% url 'movies:update' movie.pk %}" method="POST">
+  {% csrf_token %}
+  <p>
+    <label for="title" class="m-2">TITLE</label>
+    <input type="text" id="title" name="title" value="{{movie.title}}">
+  </p>
+  <p>
+    <label for="audience" class="m-2">AUDIENCE</label>
+    <input type="number" id="audience" name="audience" value="{{movie.audience}}"></input>
+  </p>
+  <p>
+    <label for="release_date" class="m-2">RELEASE_DATE</label>
+    <input type="date" id="release_date" name="release_date" value="{{movie.release_date|date:'Y-m-d'}}">
+  </p>
+    <label for="genre" class="m-2">GENRE</label>
+    <select id="genre" name="genre" value="{{movie.genre}}" class="m-2">
+      <option value="comedy">코미디</option>
+      <option value="molo">멜로</option>
+      <option value="action">액션</option>
+      <option value="horror">공포</option>
+      <option value="drama">드라마</option>
+      <option value="sf">SF</option>
+      <option value="animation">애니메이션</option>
+    </select>
+  <br>
+  <p>
+    <label for="score" class="m-2">SCORE</label>
+    <input type="number" step="0.01" id="score" name="score" value="{{movie.score}}">
+  </p>
+  <p>
+    <label for="poster_url" class="m-2">POSTER_URL</label>
+    <input type="url" id="poster_url" name="poster_url" value="{{movie.poster_url}}"></input>
+  </p>
+  <p>
+    <label for="description" class="m-2">DESCRIPTION</label>
+    <textarea name="description" id="description" cols="30" rows="5">{{movie.description}}</textarea>
+  </p>        
+  <input type="reset" value="Reset" class="m-2"><input type="submit" value="Submit" class= "m-2">
+</form>
+<hr>
+<a href="{% url 'movies:index' %}" class= "m-2"> BACK </a> 
+{% endblock content %}
