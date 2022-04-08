@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mt-3"><strong>CREATE</strong></h1>
+<hr>
+
+<form action="{% url 'movies:create' %}" method="POST">
+  {% csrf_token %}
+  {% for field in form %}
+    {{ field.label }}
+    <br>
+    <div class="mb-1">{{ field }}</div>
+    <br>
+    {% if field.errors %}
+      {% for error in field.errors %}
+        <div class="alert alert-warning">{{ error }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<hr>
+<a href=" {% url 'movies:index' %} " class= "btn btn-info"> BACK </a> 
+{% endblock content %}
