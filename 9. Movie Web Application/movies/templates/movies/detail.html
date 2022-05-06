@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class=text-center>{{ movie.title }}</h1>
+<hr>
+<div class=text-center>
+  {% for genre in movie.genres.all %}
+    <p>{{ genre.name }}</p>
+  {% endfor %}
+</div>
+<div class="container">
+  <div class="d-flex justify-content-center">
+    <img src="{{ movie.poster_path }}" alt="movieposter">
+  </div>
+  <br>
+  <p>Release Date: {{ movie.release_date }}</p>
+  <p>Popularity : {{ movie.popularity }}</p>
+  <p>Vote Average : {{ movie.vote_average }} ({{ movie.vote_count }})</p>
+  <p>Overview : {{ movie.overview }}</p>
+</div>
+  
+<a href="{% url 'movies:index' %}" class="btn btn-secondary">BACK</a>
+
+{% endblock %}

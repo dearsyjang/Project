@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ person.username }}의 프로필 페이지</h1>
+  {% with followings=person.followings.all followers=person.followers.all %}
+    <div>
+      <div>
+        <i class="fa-solid fa-user-group"></i> 팔로잉 : <span id="followings"> {{ followings|length }} </span>
+        <i class="fa-solid fa-user-group"></i> 팔로워 : <span id="followers"> {{ followers|length }} </span>
+      </div>
+      {% if request.user != person %}
+        <div>
+          <form class="follow-form" action="{% url 'accounts:follow' person.pk %}" method="POST">
+            {% csrf_token %}
+            {% if request.user in followers %}
+              <button class="btn btn-outline-light"><i type="submit" class="fa-solid fa-user-check" style="color: blue"></i></button>
+            {% else %}
+              <button class="btn btn-outline-light"><i type="submit" class="fa-solid fa-user-plus" style="color: black"></i></button>
+            {% endif %}
+          </form>
+        </div>
+      {% endif %}
+    </div>
+  {% endwith %}
+  
+  <hr>
+
+  <h3>{{ person.username }}가 쓴 글</h3>
+  {% for review in person.review_set.all %}
+    <div>{{ review.title }}</div>
+  {% endfor %}
+  
+  <hr>
+  
+  <h3>{{ person.username }}가 쓴 댓글</h3>
+  {% for comment in person.comment_set.all %}
+    <div>{{ comment.content }}</div>
+  {% endfor %}
+   
+  <hr>
+  
+  <h3>{{ person.username }}가 좋아요한 글</h3>
+  {% for review in person.like_reviews.all %}
+    <div>{{ review.title }}</div>
+  {% endfor %}
+  
+  <hr>
+  
+  <a href="{% url 'community:index' %}">[back]</a>
+  {% endblock  %}
